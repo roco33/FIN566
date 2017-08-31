@@ -1,4 +1,8 @@
-sell_buy = 2 * randi([0,1]) - 1;
-buy_sell_robot_j = sell_buy;
-price_robot_, num2str(robot_j_acct_id) = randi([min_price, max_price]);
-quantity_robot_, num2str(robot_j_acct_id) = randi([1, max_quantity])
+if buy_sell_robot_j == 1
+    live_buy_orders_list(t,:) = [robot_j_acct_id, buy_sell_robot_j, ...
+        price_robot_j, quantity_robot_j, t, order_id, ...
+        alive_indicator_robot_j];
+else live_sell_orders_list(t,:) = [
+        
+    ]
+
