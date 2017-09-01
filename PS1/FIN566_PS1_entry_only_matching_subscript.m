@@ -6,37 +6,91 @@ live_sell_orders_list = sortrows(live_sell_orders_list, [-7 3 5]);
 new_order = [robot_j_acct_id, sell_buy, price_robot_j, quantity_robot_j, ...
     t, order_id, alive_indicator_robot_j];
 
-if new_order(2) == 1 % buy order
+if new_order(2) == 1 % new_order is a buy order
     i = 1;
     
     % test aggresive or passive
-    if live_sell_orders_lists(i,7) == 0 | new_order(3) < ...
-            live_sell_orders_lists(i,3)
+    if live_sell_orders_list(i,7) == 0 || new_order(3) < ...
+            live_sell_orders_list(i,3)
+        
         %passive order
-        live_buy_orders_list(t_max,4) = 0;
+        live_buy_orders_list(t_max,:) = new_order;
         
     else 
+        
         % agggresive order
-        while new_order(4) > live_sell_orders_list(i,3)
-            new_order(4) = new_order(4) - live_sell_orders_list(i,4);
-            if new_order(4) = 0
+        while true
+            
+            %new_order is larger than best sell
+            if new_order(4) > live_sell_orders_list(i,4)
+                new_order(4) = new_order(4) - live_sell_orders_list(i,4);
+                live_sell_orders_list(i,4) = 0;
+                live_sell_orders_list(i,7) = 0;
+                
+           % new_order is not larger than best sell
+            else    
+                % new_order is just fulfilled by the i order
+                if new_order(4) == live_sell_orders_list(i,4)
+                    live_sell_orders_list(i,7) = 0;
+                end
+                
+                % new_order is fully executed
+                live_sell_orders_list(i,4) = live_sell_orders_list(i,4) - ...
+                    new_order(4);
+                new_order(4) = 0;
+                new_order(7) = 0;
+                live_buy_orders_list(t_max,:) = new_order;
+                break
+            end
+            i = i + 1;
+            if live_sell_orders_list(i,7) == 0 || new_order(3) < ...
+                    live_sell_orders_list(i,3)
+                %passive order
+                live_buy_orders_list(t_max,:) = new_order;
                 break
             end
         end
     
-    if live_sell_orders_list(i,7) == 0 % no awaiting orders
-        live_buy_orders_list(t_max,:) = new_order;
     end
     
-    % if next sell order is larger than new order
-    while new_order(4) >= live_sell_orders_list(i,4)
-        live_sell_orders_list(i,4) = 0;
-        new_order(4) = new_order(4) - live_sell_orders_list(i,4);
-        i = i + 1;
-        if live_sell_orders_list(i,4) == 0
-            % if no awaiting orders
-            break
-            live_buy_orders_list(t_max, 4) = 0;
+    
+else  % sell order
+    i = 1;
+    
+    % test aggresive or passive
+    if live_buy_orders_list(i,7) == 0 || new_order(3) > ...
+            live_buy_orders_list(i,3)
+        %passive order
+        live_sell_orders_list(t_max,:) = new_order;
+        
+    else
+        % aggresive order
+        while true
+            if new_order(4) > live_buy_orders_list(i,4)
+                new_order(4) = new_order(4) - live_buy_orders_list(i,4); 
+                live_buy_orders_list(i,4) = 0;
+                live_buy_orders_list(i,7) = 0;
+            else
+                if new_order(4) == live_buy_orders_list(i,4)
+                    live_buy_orders_list(i,7) = 0; 
+                end
+                live_buy_orders_list(i,4) = live_buy_orders_list(i,4) - ...
+                    new_order(4);
+                new_order(4) = 0; 
+                new_order(7) = 0;
+                live_sell_orders_list(t_max,:) = new_order;
+                break
+            end
+            i = i + 1;
+            if live_buy_orders_list(i,7) == 0 || new_order(3) >...
+                    live_buy_orders_list(i, 3)
+                %passive order
+                live_sell_orders_list(t_max,:) = new_order;
+                break
+            end
         end
     end
+end
+
+    
     

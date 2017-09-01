@@ -20,8 +20,8 @@ clear
 
 %'Home'    
 %Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
-%Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS1';
-Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\PS1';
+Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS1';
+%Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\PS1';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -137,7 +137,7 @@ eval(matching_engine_algo);
 %-----------------------------------------------------------
 % Constructing orderbook depth
 %-----------------------------------------------------------
-%eval(orderbook_construction_code);
+eval(orderbook_construction_code);
     %'orderbook_construction_code' updates/outputs the following variables:
     %
     %   best_bid
