@@ -19,7 +19,8 @@ clear
 %(This will need to be modified on each student's code)
 
 %'Home'    
-Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+%Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS1';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -135,7 +136,7 @@ eval(matching_engine_algo);
 %-----------------------------------------------------------
 % Constructing orderbook depth
 %-----------------------------------------------------------
-eval(orderbook_construction_code);
+%eval(orderbook_construction_code);
     %'orderbook_construction_code' updates/outputs the following variables:
     %
     %   best_bid
@@ -153,18 +154,18 @@ eval(orderbook_construction_code);
 %-----------------------------------------------------------
 %increasing the time increment
 %-----------------------------------------------------------
-t=t+1;
+%t=t+1;
 
 
 end
 
 toc
 
-transaction_price_volume_stor_mat(1,:)=[]; %Removing the row of ones 
+%transaction_price_volume_stor_mat(1,:)=[]; %Removing the row of ones 
 
 %% ----------------
 
-eval(sim_output_analysis_code)
+%eval(sim_output_analysis_code)
 
 %%
 
