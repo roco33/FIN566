@@ -84,11 +84,12 @@ bid_ask_depth_stor_mat=zeros(t_max,2);
 
 % Storing transaction information
     % time, aggressor sign, price, executed quantity, passor order_id,passor_account_id, aggressor_account_id
-transaction_price_volume_stor_mat=zeros(t_max,7);
+%transaction_price_volume_stor_mat=zeros(t_max,7);
+transaction_price_volume_stor_mat = [];
     % As a peculiarity of how I wrote my code, it is convenient to put a
     % row of ones at the top of "transaction_price_volume_stor_mat"
     % initially, and then remove it at the very end.
-transaction_price_volume_stor_mat=[ones(1,7);transaction_price_volume_stor_mat];
+%transaction_price_volume_stor_mat=[ones(1,7);transaction_price_volume_stor_mat];
 
     % Note: there will not necessarily be t_max transactions that occur,
     % but there cannot be more than t_max. If we used a system other than
@@ -101,7 +102,7 @@ transaction_price_volume_stor_mat=[ones(1,7);transaction_price_volume_stor_mat];
 t=1;
 order_id=0;
 
-tic
+tic;
 
 while t<=t_max
     
@@ -160,7 +161,7 @@ t=t+1;
 
 end
 
-toc
+process_time = toc;
 
 %transaction_price_volume_stor_mat(1,:)=[]; %Removing the row of ones 
 
