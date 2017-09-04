@@ -167,7 +167,7 @@ process_time = toc;
 
 %% ----------------
 
-%eval(sim_output_analysis_code)
+eval(sim_output_analysis_code)
 
 %%
 

@@ -23,10 +23,11 @@ if new_order(2) == 1 % new_order is a buy order
             
             %new_order is larger than best sell
             if new_order(4) > live_sell_orders_list(i,4)
-                new_order(4) = new_order(4) - live_sell_orders_list(i,4);
+                
                 transaction_price_volume_stor_mat = [...
                     transaction_price_volume_stor_mat; t, 1, ...
                     live_sell_orders_list(i,[3 4 6 1]), new_order(1)];
+                new_order(4) = new_order(4) - live_sell_orders_list(i,4);
                 live_sell_orders_list(i,4) = 0;
                 live_sell_orders_list(i,7) = 0;
                 
@@ -38,11 +39,12 @@ if new_order(2) == 1 % new_order is a buy order
                 end
                 
                 % new_order is fully executed
-                live_sell_orders_list(i,4) = live_sell_orders_list(i,4) - ...
-                    new_order(4);
+                
                 transaction_price_volume_stor_mat = [...
                     transaction_price_volume_stor_mat; t, 1, ...
                     live_sell_orders_list(i,[3 4 6 1]), new_order(1)];
+                live_sell_orders_list(i,4) = live_sell_orders_list(i,4) - ...
+                    new_order(4);
                 new_order(4) = 0;
                 new_order(7) = 0;
                 live_buy_orders_list(t_max,:) = new_order;
@@ -56,7 +58,6 @@ if new_order(2) == 1 % new_order is a buy order
                 break
             end
         end
-    
     end
     
     
@@ -73,21 +74,23 @@ else  % sell order
         % aggresive order
         while true
             if new_order(4) > live_buy_orders_list(i,4)
-                new_order(4) = new_order(4) - live_buy_orders_list(i,4); 
+                
                 transaction_price_volume_stor_mat = [...
                     transaction_price_volume_stor_mat; t, -1, ...
                     live_buy_orders_list(i,[3 4 6 1]), new_order(1)];
+                new_order(4) = new_order(4) - live_buy_orders_list(i,4); 
                 live_buy_orders_list(i,4) = 0;
                 live_buy_orders_list(i,7) = 0;
             else
                 if new_order(4) == live_buy_orders_list(i,4)
                     live_buy_orders_list(i,7) = 0; 
                 end
-                live_buy_orders_list(i,4) = live_buy_orders_list(i,4) - ...
-                    new_order(4);
+                
                 transaction_price_volume_stor_mat = [...
                     transaction_price_volume_stor_mat; t, -1, ...
                     live_buy_orders_list(i,[3 4 6 1]), new_order(1)];
+                live_buy_orders_list(i,4) = live_buy_orders_list(i,4) - ...
+                    new_order(4);
                 new_order(4) = 0; 
                 new_order(7) = 0;
                 live_sell_orders_list(t_max,:) = new_order;

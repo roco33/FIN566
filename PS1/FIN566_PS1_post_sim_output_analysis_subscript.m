@@ -23,13 +23,49 @@ end
 acc_id = 5; %robot z: 2-11
 robot_z = zeros(t_max,3); % cash, profit, inventory
 transaction_z_a = transaction_price_volume_stor_mat(...
-    transaction_price_volume_stor_mat(:,6) == acc_id,[1 2 3 4]);
+    transaction_price_volume_stor_mat(:,6) == acc_id & ...
+    transaction_price_volume_stor_mat(:,6) ~= ...
+    transaction_price_volume_stor_mat(:,7),[1 2 3 4]);
 transaction_z_p = transaction_price_volume_stor_mat(...
     transaction_price_volume_stor_mat(:,7) == acc_id,[1 2 3 4]);
 transaction_z_p = transaction_z_p .* repmat([1 -1 1 1], ...
     size(transaction_z_p,1),1);
 transaction_z = [transaction_z_a; transaction_z_p];
 
+trade_period = unique(transaction_price_volume_stor_mat(:,1));
+price_mat = [1 0];
+
+for y = 2:t_max
+    if ismember(y,trade_period)
+        trade_price = transaction_price_volume_stor_mat(...
+            transaction_price_volume_stor_mat(:,1) == y,3);
+        price_mat = [price_mat; y trade_price(length(...
+            trade_price))];
+    else
+        price_mat = [price_mat; y price_mat(y-1,2)];
+    end
+end
 
 
+robot_z_acc = [];
+robot_z_period = unique(transaction_z(:,1));
+for x = 1:t_max
+    if ismember(x,robot_z_period)
+        time_x_transaction = transaction_z(transaction_z(:,1) == ...
+            x, [2 3 4]);
+        time_x_transaction = [x, time_x_transaction(:,1), ...
+            time_x_transaction(:,1) .* time_x_transaction(:,2) .* ...
+            time_x_transaction(:,3) * (-1)];
+    else 
+        time_x_transaction = [x 0 0];
+    end
+    robot_z_acc = [robot_z_acc; time_x_transaction];
+end
 
+z_acc = [1 0 0];
+z_acc(1, [2 3]) = z_acc(1,[2 3]) + robot_z_acc(1,[2 3]);
+for t1 = 2:t_max
+    z_acc = [z_acc; t1 z_acc(t1-1,[2 3]) + robot_z_acc(t1-1, [2 3])];
+end
+
+z_acc = [z_acc, z_acc(:,2) .* price_mat(:,2) + z_acc(:,3)];
