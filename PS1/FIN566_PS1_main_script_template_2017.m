@@ -20,8 +20,8 @@ clear
 
 %'Home'    
 %Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
-%Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS1';
-Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\PS1';
+Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS1';
+%Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\PS1';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -60,7 +60,7 @@ t_max=6322;
 num_bgt=10;
 
 % Quantity ranges
-max_quantity=1;
+max_quantity=100;
 
 % Price range
 max_price=20;

@@ -1,9 +1,8 @@
 disp(['The total number of trades is ' num2str(size(...
-    transaction_price_volume_stor_mat,1)) 's']);
+    transaction_price_volume_stor_mat,1))]);
 disp(['Process time is ' num2str(process_time) 's']);
 
 spread = bid_ask_stor_mat(:,2) - bid_ask_stor_mat(:,1);
-plot(spread);
 
 disp(['The average pread after burn-in period ' num2str(mean(spread(...
     burn_in_period:length(spread))))]);
@@ -53,7 +52,8 @@ for x = 1:t_max
     if ismember(x,robot_z_period)
         time_x_transaction = transaction_z(transaction_z(:,1) == ...
             x, [2 3 4]);
-        time_x_transaction = [x, time_x_transaction(:,1), ...
+        time_x_transaction = [x * ones(size(time_x_transaction,1),1), ...
+            time_x_transaction(:,1) .* time_x_transaction(:,2), ...
             time_x_transaction(:,1) .* time_x_transaction(:,2) .* ...
             time_x_transaction(:,3) * (-1)];
     else 
@@ -63,9 +63,16 @@ for x = 1:t_max
 end
 
 z_acc = [1 0 0];
-z_acc(1, [2 3]) = z_acc(1,[2 3]) + robot_z_acc(1,[2 3]);
 for t1 = 2:t_max
     z_acc = [z_acc; t1 z_acc(t1-1,[2 3]) + robot_z_acc(t1-1, [2 3])];
 end
 
+z_acc(:,2) = z_acc(:,2) .* price_mat(:,2);
+
 z_acc = [z_acc, z_acc(:,2) .* price_mat(:,2) + z_acc(:,3)];
+
+subplot(3,2,1),plot(spread);
+subplot(3,2,2),bar(LOB,'stack');
+subplot(3,2,3),plot(z_acc(:,2));
+subplot(3,2,4),plot(z_acc(:,3));
+subplot(3,2,5),plot(z_acc(:,4));

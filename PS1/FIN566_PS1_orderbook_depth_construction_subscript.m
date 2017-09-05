@@ -72,3 +72,5 @@ bid_ask_depth_stor_mat(t,:) = [depth_best_bid depth_best_ask];
 buy_lob_depth = [buy_number; buy_quantity];
 sell_lob_depth = [sell_number; sell_quantity];
 
+LOB = [buy_price, buy_lob_depth(2,:)', zeros(size(buy_price))...
+    ; sell_price, zeros(size(sell_price)), sell_lob_depth(2,:)'];
