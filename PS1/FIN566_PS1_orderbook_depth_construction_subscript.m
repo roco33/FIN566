@@ -63,8 +63,8 @@ end
 
 best_buy = buy_price(1);
 best_sell = sell_price(1);
-depth_best_bid = buy_quantity(1);
-depth_best_ask = sell_quantity(1);
+depth_best_bid = buy_quantity(length(buy_quantity));
+depth_best_ask = (-1) * sell_quantity(1);
 
 bid_ask_stor_mat(t,:) = [best_buy, best_sell];
 bid_ask_depth_stor_mat(t,:) = [depth_best_bid depth_best_ask];

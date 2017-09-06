@@ -19,7 +19,7 @@ for u = 1:size(sell_stack,1)
         sell_price(u),4)';
 end
 
-acc_id = 5; %robot z: 2-11
+acc_id = randi(num_bgt)+1; %robot z: 2-11
 robot_z = zeros(t_max,3); % cash, profit, inventory
 transaction_z_a = transaction_price_volume_stor_mat(...
     transaction_price_volume_stor_mat(:,6) == acc_id & ...
@@ -62,17 +62,44 @@ for x = 1:t_max
     robot_z_acc = [robot_z_acc; time_x_transaction];
 end
 
+% z_acc: time. number of shares, cash position, value of shares, porfolio
 z_acc = [1 0 0];
 for t1 = 2:t_max
     z_acc = [z_acc; t1 z_acc(t1-1,[2 3]) + robot_z_acc(t1-1, [2 3])];
 end
 
-z_acc(:,2) = z_acc(:,2) .* price_mat(:,2);
+z_acc(:,4) = z_acc(:,2) .* price_mat(:,2);
 
 z_acc = [z_acc, z_acc(:,2) .* price_mat(:,2) + z_acc(:,3)];
 
 subplot(3,2,1),plot(spread);
-subplot(3,2,2),bar(LOB,'stack');
-subplot(3,2,3),plot(z_acc(:,2));
-subplot(3,2,4),plot(z_acc(:,3));
-subplot(3,2,5),plot(z_acc(:,4));
+title('spread');
+subplot(3,2,2),bar(bid_ask_depth_stor_mat);
+title('depth at best bid and ask');
+legend('bid','ask');
+subplot(3,2,3),bar(LOB,'stack');
+title('LOB');
+subplot(3,2,4),plot(z_acc(:,[3 4 5]));
+title('robot z');
+legend('cash position', 'shares value', 'portfolio profit','location',...
+    'northwest');
+subplot(3,2,5),plot(z_acc(:,2));
+title('robot z, number of shares');
+subplot(3,2,6),plot(z_acc(:,5));
+title('profit')
+
+robot_z_total_trading_profit = z_acc(length(z_acc),5);
+robot_z_total_trading_volume = sum(transaction_price_volume_stor_mat...
+    (transaction_price_volume_stor_mat(:,6) == acc_id | ...
+    transaction_price_volume_stor_mat(:,7) == acc_id, 4));
+robot_z_final_inventory_position = z_acc(length(z_acc),2);
+robot_z_final_cash_position = z_acc(length(z_acc),3);
+
+disp(['robot_z_total_trading_profit is ' ...
+    num2str(robot_z_total_trading_profit)]);
+disp(['robot_z_total_trading_volume is ' ...
+    num2str(robot_z_total_trading_volume)]);
+disp(['robot_z_final_inventory_position is ' ...
+    num2str(robot_z_final_inventory_position)]);
+disp(['robot_z_final_cash_position is ' ...
+    num2str(robot_z_final_cash_position)]);
