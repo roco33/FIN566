@@ -61,7 +61,7 @@ else
     sell_number = 0;
 end
 
-best_buy = buy_price(1);
+best_buy = buy_price(length(buy_price));
 best_sell = sell_price(1);
 depth_best_bid = buy_quantity(length(buy_quantity));
 depth_best_ask = (-1) * sell_quantity(1);

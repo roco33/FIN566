@@ -4,7 +4,7 @@ disp(['Process time is ' num2str(process_time) 's']);
 
 spread = bid_ask_stor_mat(:,2) - bid_ask_stor_mat(:,1);
 
-disp(['The average pread after burn-in period ' num2str(mean(spread(...
+disp(['The average spread after burn-in period ' num2str(mean(spread(...
     burn_in_period:length(spread))))]);
 
 buy_stack = zeros(length(buy_price), max(buy_number));
@@ -77,7 +77,7 @@ title('spread');
 subplot(3,2,2),bar(bid_ask_depth_stor_mat);
 title('depth at best bid and ask');
 legend('bid','ask');
-subplot(3,2,3),bar(LOB,'stack');
+subplot(3,2,3),bar(LOB(:,[2 3]),'stack');
 title('LOB');
 subplot(3,2,4),plot(z_acc(:,[3 4 5]));
 title('robot z');
