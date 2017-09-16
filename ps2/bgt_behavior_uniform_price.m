@@ -8,11 +8,19 @@
 % Quantity is drawn from a uniform distribution over integers in the closed
 % interval [1,max_quantity]
 
+
+% buy or sell 
 buy_sell_robot_j=randi(2);
 buy_sell_robot_j=2*(buy_sell_robot_j-1.5);
 
+
+% price 
 price_robot_j=randi([min_price,max_price]);
 
+
+% quantity 
 quantity_robot_j=randi(max_quantity);
 
+
+% alive indicator 
 alive_indicator_robot_j=1;
