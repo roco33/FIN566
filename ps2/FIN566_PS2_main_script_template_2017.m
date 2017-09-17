@@ -20,10 +20,10 @@ clear
 %'Home'    
 
 % from desktop
-Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\ps2';
+%Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\ps2';
 
 % from laptop
-%Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS2';
+Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS2';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
