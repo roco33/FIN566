@@ -20,10 +20,10 @@ clear
 %'Home'    
 
 % from desktop
-Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\ps2';
+% Matlab_trading_simulations_folder='C:\Users\roco3\Documents\MATLAB\FIN566\ps2';
 
 % from laptop
-% Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS2';
+Matlab_trading_simulations_folder='C:\Users\roco33\Documents\MATLAB\FIN566\PS2';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -42,7 +42,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_uprice_passive';
+robot1_commands='robot1_algo_uprice_passive_6';
 
 %% %*****Designating the Background-Trader Control-Script Name*****
 background_trader_commands='bgt_behavior_uniform_price';
