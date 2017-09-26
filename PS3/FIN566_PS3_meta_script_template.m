@@ -36,7 +36,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_at_best_IC';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
+robot1_commands='robot1_algo_mm_at_best';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
 
 
 %% %*****Designating the Background-Trader Control-Script Name*****
