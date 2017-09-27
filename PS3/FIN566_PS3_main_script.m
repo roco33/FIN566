@@ -13,7 +13,7 @@
 % it from a meta-script, uncomment the two "Independence Commands" below,
 % as indicated.
 
-run_main_script_independently_indic=0;
+run_main_script_independently_indic=1;
 
 % %% %*****Independence Commands*********** (Uncomment to run this script independently)
 % clear  
@@ -50,7 +50,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 % %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_at_best_IC';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
+robot1_commands='robot1_algo_mm_at_best';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
 
 
 % %% %*****Designating the Background-Trader Control-Script Name*****
@@ -65,7 +65,7 @@ background_trader_commands='bgt_behavior_rw_price';
 robot1_participate_indic=1;
 
 % Number of time-steps
-t_max=2322;
+t_max=11322;
 
 % Number of background traders
 num_bgt=10;
@@ -86,7 +86,7 @@ price_flex=1;
 prob_last_order_price_sets_to_price_robot_1=1;
 
 % Probability that 'last_order_price' resets to the newest order price
-prob_last_order_price_resets=0.0078;%0.011;
+prob_last_order_price_resets=1;%0.011,0.064;
 
 % Burn-in period
 burn_in_period=1322;
@@ -294,7 +294,7 @@ end
 end
 
 transaction_price_volume_stor_mat(1,:)=[];
-
+robot1_inventory_stor_vec(end) = robot1_inventory_stor_vec(end-1) + robot1_inventory_changes(end);
 % %%----------------
 % Number of Transactions
 % 
@@ -400,7 +400,7 @@ algo_performance_stor_vec=[number_of_post_burn_in_transactions;
 % %%-----------------------------------
 % % Storing the key results 
 % % (Do not use if running the script independently)
-meta_comparison_mat=[meta_comparison_mat, algo_performance_stor_vec];
+% meta_comparison_mat=[meta_comparison_mat, algo_performance_stor_vec];
 
 
 
