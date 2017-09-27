@@ -50,7 +50,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 % %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_better_price';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
+robot1_commands='robot1_algo_mm_at_best_IC';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
 
 
 % %% %*****Designating the Background-Trader Control-Script Name*****
@@ -86,7 +86,7 @@ price_flex=1;
 prob_last_order_price_sets_to_price_robot_1=1;
 
 % Probability that 'last_order_price' resets to the newest order price
-prob_last_order_price_resets=1;%0.011;
+prob_last_order_price_resets=0.0078;%0.011;
 
 % Burn-in period
 burn_in_period=1322;
@@ -304,7 +304,7 @@ number_of_post_burn_in_transactions = length(transaction_price_volume_stor_mat(t
 % %%---------------
 % Bid-Ask Spread
 %
-mean_bid_ask_spread = mean(bid_ask_depth_stor_mat(:,2) - bid_ask_depth_stor_mat(:,1));
+mean_bid_ask_spread = mean(bid_ask_stor_mat([burn_in_period:end],2) - bid_ask_stor_mat([burn_in_period:end],1));
 
 
 % %%---------------
@@ -340,10 +340,10 @@ end
 
 trading_profit = cash_pos + robot1_inventory_stor_vec .* price;
 robot_z_total_trading_profit = trading_profit(length(trading_profit));
-robot_z_total_trading_volume = abs(inv_chg') * price; 
+robot_z_total_trading_volume = sum(abs(robot1_inventory_changes)); 
 
-robot_z_final_inventory_position= robot1_inventory_stor_vec(length(robot1_inventory_stor_vec));
-robot_z_final_cash_position = cash_pos(length(cash_pos));
+robot_z_final_inventory_position= robot1_inventory_stor_vec(end)*price(end);
+robot_z_final_cash_position = cash_pos(end);
 
 robot_z_max_inventory_position_dollars = max(abs(robot1_inventory_stor_vec) .* price);
 robot_z_max_inventory_position_shares = max(abs(robot1_inventory_stor_vec));
@@ -400,7 +400,7 @@ algo_performance_stor_vec=[number_of_post_burn_in_transactions;
 % %%-----------------------------------
 % % Storing the key results 
 % % (Do not use if running the script independently)
- meta_comparison_mat=[meta_comparison_mat, algo_performance_stor_vec];
+meta_comparison_mat=[meta_comparison_mat, algo_performance_stor_vec];
 
 
 
