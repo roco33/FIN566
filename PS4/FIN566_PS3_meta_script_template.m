@@ -1,9 +1,9 @@
 %-------------------------------------------------%
 %
-%           FIN566 PS#3 Meta Script
+%           FIN580 PS#3 Meta Script TEMPLATE
 %
-%               Version 6
-%               9/26/2017
+%               Version 5
+%               9/16/2017
 %
 %            First Version: 9/15/2013
 %
@@ -17,8 +17,7 @@ clear
 %(This will need to be modified on each student's code)
 
 %'Home'    
-Matlab_trading_simulations_folder = pwd
-%Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -36,7 +35,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_at_best';%'robot1_algo_mm_at_best_IC';%'robot1_algo_mm_better_price';%
+robot1_commands='robot1_algo_mm_at_best_IC';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
 
 
 %% %*****Designating the Background-Trader Control-Script Name*****
@@ -78,29 +77,24 @@ burn_in_period=1322;
 
 
 %% %*****Designating the Main Simulation Script's Name*****
-main_simulation_script='FIN566_PS3_main_script_2017';
+main_simulation_script='FIN566_PS3_main_script';
+
+
+%% %*******Creating Data-Storage Structures***********
+meta_comparison_mat=[];
 
 
 %% %******* Running the [Meta-] Simulation***********
 
 num_simulation_runs=50;
 
-%% %*******Creating Data-Storage Structures***********
-meta_comparison_mat=zeros(13,num_simulation_runs);
-
-%%
-tic
 for w=1:num_simulation_runs
- %tic
-  
+    
     eval(main_simulation_script)
 
- toc
-  %w
 end
-toc
 
-%%
+%
 % algo_performance_stor_vec=[number_of_post_burn_in_transactions;
 %                            mean_bid_ask_spread;
 %                            robot_z_max_inventory_position_dollars;
@@ -113,48 +107,18 @@ toc
 %                            median_TtE;
 %                            std_TtE;
 %                            fraction_of_robot_1_orders_executed;
-%                            fraction_of_robot1_orders_placed_mispriced];
-%                            %est_prob_last_order_price_resets];
+%                            fraction_of_robot1_orders_placed_mispriced;
+%                            est_prob_last_order_price_resets];
+%
+% meta_comparison_mat(:,w)=algo_performance_stor_vec;
 
-mean(meta_comparison_mat,2)
 
-%label_meta_comparison_mat=['meta_comparison_mat_',robot1_commands,'_',int2str(num_simulation_runs),'_runs','.mat'];
-%save(label_meta_comparison_mat,'meta_comparison_mat','robot1_commands','background_trader_commands','robot1_participate_indic','t_max','num_bgt','max_quantity','max_price','min_price','price_flex','prob_last_order_price_resets','burn_in_period','main_simulation_script','num_simulation_runs');
+%% %*****Bootstrap analysis using "meta_comparison_mat"****
 
-%%
 
-meta_comparison_mat_col_stor=meta_comparison_mat';
 
-bootstrap_column_index_choice_vec=5;%[2,4,5,6,9,10,12,13];%,14];%[1,3,7,8,11];%
-num_bootstrap_samples=50000;
-confidence_level=0.05;
 
-bootstrap_CI_results_mat=zeros(length(bootstrap_column_index_choice_vec),4);
 
-lower_cutoff=floor(confidence_level*num_bootstrap_samples/2);
-upper_cutoff=num_bootstrap_samples-lower_cutoff;
 
-for h=1:length(bootstrap_column_index_choice_vec)
 
-    bootstrap_column_index=bootstrap_column_index_choice_vec(h);
 
-    bootstrap_samples_stor_vec=zeros(1,num_bootstrap_samples);
-
-    for w=1:num_bootstrap_samples
-        sample_indices=randi(num_simulation_runs,[1,num_simulation_runs]);
-        sample_values_vec=meta_comparison_mat_col_stor(sample_indices,bootstrap_column_index);    
-        bootstrap_samples_stor_vec(w)=mean(sample_values_vec);    
-    end
-
-bootstrap_samples_stor_vec_sorted=sort(bootstrap_samples_stor_vec);
-
-bootstrap_CI_lower=bootstrap_samples_stor_vec_sorted(lower_cutoff);
-bootstrap_CI_upper=bootstrap_samples_stor_vec_sorted(upper_cutoff);
-
-bootstrap_CI_results_mat(h,:)=[bootstrap_column_index,confidence_level,bootstrap_CI_lower,bootstrap_CI_upper];
-
-end
-
-bootstrap_CI_results_mat
-
-%%
