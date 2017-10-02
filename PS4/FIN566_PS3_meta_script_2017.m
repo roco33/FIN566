@@ -11,7 +11,7 @@
 
 
 %% %*****Startup Tasks***********
-clear
+%clear
 
 %*****Setting the appropriate path 
 %(This will need to be modified on each student's code)
@@ -49,8 +49,11 @@ background_trader_commands='bgt_behavior_rw_price';
 % Whether robot1 participates (1) or not (0)
 robot1_participate_indic=1;
 
+% watch_interval
+watch_interval=2322;
+
 % Number of time-steps
-t_max=2322;
+t_max=watch_interval+1000;
 
 % Number of background traders
 num_bgt=10;
@@ -71,10 +74,13 @@ price_flex=1;
 prob_last_order_price_sets_to_price_robot_1=0;
 
 % Probability that 'last_order_price' resets to the newest order price
-prob_last_order_price_resets=0.064;
+prob_last_order_price_resets=0.01;
 
 % Burn-in period
 burn_in_period=1322;
+
+% theta trgger value 
+%mm_trigger_value = 0.05;
 
 
 %% %*****Designating the Main Simulation Script's Name*****
@@ -123,38 +129,38 @@ mean(meta_comparison_mat,2)
 
 %%
 
-meta_comparison_mat_col_stor=meta_comparison_mat';
+% meta_comparison_mat_col_stor=meta_comparison_mat';
 
-bootstrap_column_index_choice_vec=5;%[2,4,5,6,9,10,12,13];%,14];%[1,3,7,8,11];%
-num_bootstrap_samples=50000;
-confidence_level=0.05;
+% bootstrap_column_index_choice_vec=5;%[2,4,5,6,9,10,12,13];%,14];%[1,3,7,8,11];%
+% num_bootstrap_samples=50000;
+% confidence_level=0.05;
 
-bootstrap_CI_results_mat=zeros(length(bootstrap_column_index_choice_vec),4);
+% bootstrap_CI_results_mat=zeros(length(bootstrap_column_index_choice_vec),4);
 
-lower_cutoff=floor(confidence_level*num_bootstrap_samples/2);
-upper_cutoff=num_bootstrap_samples-lower_cutoff;
+% lower_cutoff=floor(confidence_level*num_bootstrap_samples/2);
+% upper_cutoff=num_bootstrap_samples-lower_cutoff;
 
-for h=1:length(bootstrap_column_index_choice_vec)
+% for h=1:length(bootstrap_column_index_choice_vec)
 
-    bootstrap_column_index=bootstrap_column_index_choice_vec(h);
+    % bootstrap_column_index=bootstrap_column_index_choice_vec(h);
 
-    bootstrap_samples_stor_vec=zeros(1,num_bootstrap_samples);
+    % bootstrap_samples_stor_vec=zeros(1,num_bootstrap_samples);
 
-    for w=1:num_bootstrap_samples
-        sample_indices=randi(num_simulation_runs,[1,num_simulation_runs]);
-        sample_values_vec=meta_comparison_mat_col_stor(sample_indices,bootstrap_column_index);    
-        bootstrap_samples_stor_vec(w)=mean(sample_values_vec);    
-    end
+    % for w=1:num_bootstrap_samples
+        % sample_indices=randi(num_simulation_runs,[1,num_simulation_runs]);
+        % sample_values_vec=meta_comparison_mat_col_stor(sample_indices,bootstrap_column_index);    
+        % bootstrap_samples_stor_vec(w)=mean(sample_values_vec);    
+    % end
 
-bootstrap_samples_stor_vec_sorted=sort(bootstrap_samples_stor_vec);
+% bootstrap_samples_stor_vec_sorted=sort(bootstrap_samples_stor_vec);
 
-bootstrap_CI_lower=bootstrap_samples_stor_vec_sorted(lower_cutoff);
-bootstrap_CI_upper=bootstrap_samples_stor_vec_sorted(upper_cutoff);
+% bootstrap_CI_lower=bootstrap_samples_stor_vec_sorted(lower_cutoff);
+% bootstrap_CI_upper=bootstrap_samples_stor_vec_sorted(upper_cutoff);
 
-bootstrap_CI_results_mat(h,:)=[bootstrap_column_index,confidence_level,bootstrap_CI_lower,bootstrap_CI_upper];
+% bootstrap_CI_results_mat(h,:)=[bootstrap_column_index,confidence_level,bootstrap_CI_lower,bootstrap_CI_upper];
 
-end
+% end
 
-bootstrap_CI_results_mat
+% bootstrap_CI_results_mat
 
-%%
+%

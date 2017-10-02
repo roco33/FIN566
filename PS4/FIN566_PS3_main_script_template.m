@@ -90,6 +90,12 @@ prob_last_order_price_resets=0.01;%0.011;
 % Burn-in period
 burn_in_period=1322;
 
+% watch_interval > burn_in_period
+watch_interval=1500;
+
+% theta trgger value 
+mm_trigger_value
+
 end
 
 
@@ -220,7 +226,8 @@ parent_script_only_price=last_order_price;
 % background trader.  This can be trivially changed in future versions.
 robot1_participation_draw=randi((num_bgt+1));
 
-if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
+if (robot1_participation_draw==1)&&(t>watch_interval)&&(robot1_participate_indic==1)
+% if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
 
 order_id=order_id+1;
 

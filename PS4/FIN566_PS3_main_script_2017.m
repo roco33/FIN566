@@ -50,7 +50,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 % %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_at_best_IC';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
+robot1_commands='robot1_algo_mm_at_best';%'robot1_algo_mm_at_best';%'robot1_algo_mm_better_price';%
 
 
 % %% %*****Designating the Background-Trader Control-Script Name*****
@@ -64,8 +64,11 @@ background_trader_commands='bgt_behavior_rw_price';
 % Whether robot1 participates (1) or not (0)
 robot1_participate_indic=1;
 
+% watch_interval
+watch_interval=2322;
+
 % Number of time-steps
-t_max=2322;
+t_max=watch_interval+1000;
 
 % Number of background traders
 num_bgt=10;  %  dont change this 
@@ -90,6 +93,9 @@ prob_last_order_price_resets=0.01;%0.011;
 
 % Burn-in period
 burn_in_period=1322;    % dont change this 
+
+% theta trgger value 
+mm_trigger_value = 0.06;
 
 end
 
@@ -221,7 +227,9 @@ parent_script_only_price=last_order_price;
 % background trader.  This can be trivially changed in future versions.
 robot1_participation_draw=randi((num_bgt+1));
 
-if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
+% for question 2, robot1 only trad after watch_interval
+% if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
+if (robot1_participation_draw==1)&&(t>watch_interval)&&(robot1_participate_indic==1)
 
 order_id=order_id+1;
 
