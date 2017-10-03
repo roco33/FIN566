@@ -95,16 +95,16 @@ num_simulation_runs=50;
 meta_comparison_mat=zeros(13,num_simulation_runs);
 
 %%
-tic
+% tic
 for w=1:num_simulation_runs
  %tic
   
     eval(main_simulation_script)
 
- toc
+ % toc
   %w
 end
-toc
+% toc
 
 %%
 % algo_performance_stor_vec=[number_of_post_burn_in_transactions;

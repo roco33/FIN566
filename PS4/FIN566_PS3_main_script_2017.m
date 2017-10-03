@@ -13,7 +13,7 @@
 % it from a meta-script, uncomment the two "Independence Commands" below,
 % as indicated.
 
-run_main_script_independently_indic=0;
+run_main_script_independently_indic=1;
 
 % %% %*****Independence Commands*********** (Uncomment to run this script independently)
 % clear  
@@ -25,7 +25,7 @@ run_main_script_independently_indic=0;
 if run_main_script_independently_indic==1 
    'Alert: script is running independently, using locally specified parameter values'
     
-clear
+% clear
 
 %*****Setting the appropriate path 
 %(This will need to be modified on each student's code)
@@ -65,10 +65,11 @@ background_trader_commands='bgt_behavior_rw_price';
 robot1_participate_indic=1;
 
 % watch_interval
-watch_interval=2322;
+% watch_interval=2322;
 
 % Number of time-steps
-t_max=watch_interval+1000;
+% t_max=watch_interval+1000;
+t_max=2322;
 
 % Number of background traders
 num_bgt=10;  %  dont change this 
@@ -95,7 +96,7 @@ prob_last_order_price_resets=0.01;%0.011;
 burn_in_period=1322;    % dont change this 
 
 % theta trgger value 
-mm_trigger_value = 0.06;
+% mm_trigger_value = 0.01;
 
 end
 
@@ -228,8 +229,8 @@ parent_script_only_price=last_order_price;
 robot1_participation_draw=randi((num_bgt+1));
 
 % for question 2, robot1 only trad after watch_interval
-% if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
-if (robot1_participation_draw==1)&&(t>watch_interval)&&(robot1_participate_indic==1)
+if (robot1_participation_draw==1)&&(t>burn_in_period)&&(robot1_participate_indic==1)
+% if (robot1_participation_draw==1)&&(t>watch_interval)&&(robot1_participate_indic==1)
 
 order_id=order_id+1;
 
@@ -437,9 +438,9 @@ algo_performance_stor_vec=[number_of_post_burn_in_transactions;
 %%% -----------------------------------
 % % Storing the key results 
 % % (Do not use if running the script independently)
-if run_main_script_independently_indic==0
-    meta_comparison_mat(:,w)=algo_performance_stor_vec;
-end
+% if run_main_script_independently_indic==0
+    % meta_comparison_mat(:,w)=algo_performance_stor_vec;
+% end
 
 
 
