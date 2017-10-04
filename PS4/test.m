@@ -14,7 +14,7 @@ for j = 1:n_simu
 	for i = 1:t_max
 		
 		new_order = randi([last_order-flex,last_order+flex]);
-		bg_orders = [bg_orders, new_order];
+		
 		if rand() < prob
 			last_order = new_order;
 			last_orders = [last_orders, last_order];

@@ -306,134 +306,134 @@ transaction_price_volume_stor_mat(1,:)=[];
 
 %% ----------------
 % Number of Transactions
-number_of_trades=nnz(transaction_price_volume_stor_mat(:,1));
+% number_of_trades=nnz(transaction_price_volume_stor_mat(:,1));
 
-transaction_price_volume_stor_mat((number_of_trades+1):end,:)=[];
+% transaction_price_volume_stor_mat((number_of_trades+1):end,:)=[];
 
-post_burn_in_transactions_start=find((transaction_price_volume_stor_mat(:,1)>burn_in_period),1,'first');
-number_of_post_burn_in_transactions=number_of_trades-post_burn_in_transactions_start;
+% post_burn_in_transactions_start=find((transaction_price_volume_stor_mat(:,1)>burn_in_period),1,'first');
+% number_of_post_burn_in_transactions=number_of_trades-post_burn_in_transactions_start;
 
 % %%---------------
 % Bid-Ask Spread
-bid_ask_spread_stor_vec=bid_ask_stor_mat(:,2)-bid_ask_stor_mat(:,1);
-mean_bid_ask_spread=mean(bid_ask_spread_stor_vec((burn_in_period+1):end));
+% bid_ask_spread_stor_vec=bid_ask_stor_mat(:,2)-bid_ask_stor_mat(:,1);
+% mean_bid_ask_spread=mean(bid_ask_spread_stor_vec((burn_in_period+1):end));
 
 
 % %%---------------
 % Tracking P&L, Cash, and Inventory
-aggressor_changes_in_net_cash=(-1)*transaction_price_volume_stor_mat(:,2).*transaction_price_volume_stor_mat(:,4).*transaction_price_volume_stor_mat(:,3);
-aggressor_changes_in_net_inventory=transaction_price_volume_stor_mat(:,2).*transaction_price_volume_stor_mat(:,4);
+% aggressor_changes_in_net_cash=(-1)*transaction_price_volume_stor_mat(:,2).*transaction_price_volume_stor_mat(:,4).*transaction_price_volume_stor_mat(:,3);
+% aggressor_changes_in_net_inventory=transaction_price_volume_stor_mat(:,2).*transaction_price_volume_stor_mat(:,4);
 
-passor_changes_in_net_cash=(-1)*aggressor_changes_in_net_cash;
-passor_changes_in_net_inventory=(-1)*aggressor_changes_in_net_inventory;
+% passor_changes_in_net_cash=(-1)*aggressor_changes_in_net_cash;
+% passor_changes_in_net_inventory=(-1)*aggressor_changes_in_net_inventory;
 
-positions_changes_mat=[transaction_price_volume_stor_mat(:,1),aggressor_changes_in_net_cash,aggressor_changes_in_net_inventory,transaction_price_volume_stor_mat(:,7),passor_changes_in_net_cash,passor_changes_in_net_inventory,transaction_price_volume_stor_mat(:,6),transaction_price_volume_stor_mat(:,3)];
+% positions_changes_mat=[transaction_price_volume_stor_mat(:,1),aggressor_changes_in_net_cash,aggressor_changes_in_net_inventory,transaction_price_volume_stor_mat(:,7),passor_changes_in_net_cash,passor_changes_in_net_inventory,transaction_price_volume_stor_mat(:,6),transaction_price_volume_stor_mat(:,3)];
 
 % %%
-robot_account_id=2-robot1_participate_indic;
-z=robot_account_id;
+% robot_account_id=2-robot1_participate_indic;
+% z=robot_account_id;
 
-robot_z_aggressor_indic=(transaction_price_volume_stor_mat(:,7)==z);
-robot_z_passor_indic=(transaction_price_volume_stor_mat(:,6)==z);
-robot_z_indic=(robot_z_aggressor_indic|robot_z_passor_indic);
+% robot_z_aggressor_indic=(transaction_price_volume_stor_mat(:,7)==z);
+% robot_z_passor_indic=(transaction_price_volume_stor_mat(:,6)==z);
+% robot_z_indic=(robot_z_aggressor_indic|robot_z_passor_indic);
 
-robot_z_aggressive_trades=positions_changes_mat(robot_z_aggressor_indic,[1:3,7]);
-robot_z_passive_trades=positions_changes_mat(robot_z_passor_indic,[1,5,6,7]);
+% robot_z_aggressive_trades=positions_changes_mat(robot_z_aggressor_indic,[1:3,7]);
+% robot_z_passive_trades=positions_changes_mat(robot_z_passor_indic,[1,5,6,7]);
 
-robot_z_positions_change_history=[robot_z_aggressive_trades;robot_z_passive_trades];
-robot_z_positions_change_history=sortrows(robot_z_positions_change_history,1);
-robot_z_mark_to_market_prices=positions_changes_mat(robot_z_indic,8);
+% robot_z_positions_change_history=[robot_z_aggressive_trades;robot_z_passive_trades];
+% robot_z_positions_change_history=sortrows(robot_z_positions_change_history,1);
+% robot_z_mark_to_market_prices=positions_changes_mat(robot_z_indic,8);
 
-cum_robot_z_positions=cumsum(robot_z_positions_change_history(:,2:3),1);
-[b,m,n]=unique(robot_z_positions_change_history(:,1),'last');
+% cum_robot_z_positions=cumsum(robot_z_positions_change_history(:,2:3),1);
+% [b,m,n]=unique(robot_z_positions_change_history(:,1),'last');
 
-cum_robot_z_positions_history=[robot_z_positions_change_history(m,1),cum_robot_z_positions(m,:),robot_z_mark_to_market_prices(m)];
-mark_to_market_inventory_value_robot_z=cum_robot_z_positions_history(:,3).*cum_robot_z_positions_history(:,4);
-robot_z_mark_to_market_P_and_L=mark_to_market_inventory_value_robot_z+cum_robot_z_positions_history(:,2);
+% cum_robot_z_positions_history=[robot_z_positions_change_history(m,1),cum_robot_z_positions(m,:),robot_z_mark_to_market_prices(m)];
+% mark_to_market_inventory_value_robot_z=cum_robot_z_positions_history(:,3).*cum_robot_z_positions_history(:,4);
+% robot_z_mark_to_market_P_and_L=mark_to_market_inventory_value_robot_z+cum_robot_z_positions_history(:,2);
 
 
-if sum(robot_z_indic)==0
-    robot_z_max_inventory_position_dollars=0;
-    robot_z_max_inventory_position_shares=0;
-    robot_z_total_trading_profit=0;
-    robot_z_total_trading_volume=0;
-    robot_z_final_inventory_position=0;
-    robot_z_final_cash_position=0;
-    mean_TtE=0;
-    median_TtE=0;
-    std_TtE=0;
-    fraction_of_robot_1_orders_executed=0;
-    fraction_of_robot1_orders_placed_mispriced=0;
-else
+% if sum(robot_z_indic)==0
+    % robot_z_max_inventory_position_dollars=0;
+    % robot_z_max_inventory_position_shares=0;
+    % robot_z_total_trading_profit=0;
+    % robot_z_total_trading_volume=0;
+    % robot_z_final_inventory_position=0;
+    % robot_z_final_cash_position=0;
+    % mean_TtE=0;
+    % median_TtE=0;
+    % std_TtE=0;
+    % fraction_of_robot_1_orders_executed=0;
+    % fraction_of_robot1_orders_placed_mispriced=0;
+% else
 %
-robot_z_total_trading_profit=robot_z_mark_to_market_P_and_L(end);
-robot_z_total_trading_volume=sum(abs(robot_z_positions_change_history(:,3)));
+% robot_z_total_trading_profit=robot_z_mark_to_market_P_and_L(end);
+% robot_z_total_trading_volume=sum(abs(robot_z_positions_change_history(:,3)));
 
-robot_z_final_inventory_position=mark_to_market_inventory_value_robot_z(end);
-robot_z_final_cash_position=cum_robot_z_positions_history(end,2);
+% robot_z_final_inventory_position=mark_to_market_inventory_value_robot_z(end);
+% robot_z_final_cash_position=cum_robot_z_positions_history(end,2);
 
-robot_z_max_inventory_position_dollars=max(abs(mark_to_market_inventory_value_robot_z));
-robot_z_max_inventory_position_shares=max(abs(cum_robot_z_positions_history(:,3)));
+% robot_z_max_inventory_position_dollars=max(abs(mark_to_market_inventory_value_robot_z));
+% robot_z_max_inventory_position_shares=max(abs(cum_robot_z_positions_history(:,3)));
 
 
 % %%-----------------------------
 % Time-to-Execution Statistics
 
-robot_z_passor_indic=(transaction_price_volume_stor_mat(:,6)==z);
-z_passor_transaction_price_volume_stor_mat=transaction_price_volume_stor_mat(robot_z_passor_indic,:);
-time_to_execution_robot_z_orders=z_passor_transaction_price_volume_stor_mat(:,1)-z_passor_transaction_price_volume_stor_mat(:,5);
+% robot_z_passor_indic=(transaction_price_volume_stor_mat(:,6)==z);
+% z_passor_transaction_price_volume_stor_mat=transaction_price_volume_stor_mat(robot_z_passor_indic,:);
+% time_to_execution_robot_z_orders=z_passor_transaction_price_volume_stor_mat(:,1)-z_passor_transaction_price_volume_stor_mat(:,5);
 
-mean_TtE=mean(time_to_execution_robot_z_orders);
-median_TtE=median(time_to_execution_robot_z_orders);
-std_TtE=std(time_to_execution_robot_z_orders);
+% mean_TtE=mean(time_to_execution_robot_z_orders);
+% median_TtE=median(time_to_execution_robot_z_orders);
+% std_TtE=std(time_to_execution_robot_z_orders);
 
 
 % %%-----------------------------
 % Percentage-of-Orders-Executed Statistics
-robot_1_live_buy_order_indic=(live_buy_orders_list(:,1)==1);
-robot_1_live_sell_order_indic=(live_sell_orders_list(:,1)==1);
+% robot_1_live_buy_order_indic=(live_buy_orders_list(:,1)==1);
+% robot_1_live_sell_order_indic=(live_sell_orders_list(:,1)==1);
 
-number_of_robot_1_live_orders_ending=sum(robot_1_live_buy_order_indic)+sum(robot_1_live_sell_order_indic);
-number_of_orders_robot_1_placed=sum(robot1_order_entry_times); 
+% number_of_robot_1_live_orders_ending=sum(robot_1_live_buy_order_indic)+sum(robot_1_live_sell_order_indic);
+% number_of_orders_robot_1_placed=sum(robot1_order_entry_times); 
 
-fraction_of_robot_1_orders_executed=(number_of_orders_robot_1_placed-number_of_robot_1_live_orders_ending)/number_of_orders_robot_1_placed;
+% fraction_of_robot_1_orders_executed=(number_of_orders_robot_1_placed-number_of_robot_1_live_orders_ending)/number_of_orders_robot_1_placed;
 
 
 % %%-----------------------------
 % Percentage-of-Orders-Mispriced Statistics
-FV=last_order_price_stor_vec;
+% FV=last_order_price_stor_vec;
 
-bids_too_high_indic=(robot1_order_prices_signed>FV);
-asks_too_low_indic=(robot1_order_prices_signed<0).*(robot1_order_prices_signed>((-1)*FV));
+% bids_too_high_indic=(robot1_order_prices_signed>FV);
+% asks_too_low_indic=(robot1_order_prices_signed<0).*(robot1_order_prices_signed>((-1)*FV));
 
-num_robot_1_buy_orders_placed=sum((robot1_order_prices_signed>0));
-num_robot_1_sell_orders_placed=sum((robot1_order_prices_signed<0));
+% num_robot_1_buy_orders_placed=sum((robot1_order_prices_signed>0));
+% num_robot_1_sell_orders_placed=sum((robot1_order_prices_signed<0));
 
-num_bids_too_high_placed=sum(bids_too_high_indic);
-num_asks_too_low_placed=sum(asks_too_low_indic);
+% num_bids_too_high_placed=sum(bids_too_high_indic);
+% num_asks_too_low_placed=sum(asks_too_low_indic);
 
-robot1_num_mispriced_orders_placed=num_bids_too_high_placed+num_asks_too_low_placed;
+% robot1_num_mispriced_orders_placed=num_bids_too_high_placed+num_asks_too_low_placed;
 
-fraction_of_robot1_orders_placed_mispriced=robot1_num_mispriced_orders_placed/number_of_orders_robot_1_placed;
-end
+% fraction_of_robot1_orders_placed_mispriced=robot1_num_mispriced_orders_placed/number_of_orders_robot_1_placed;
+% end
 
 % %% -----------------------------------
 
 % %% -----------------------------------
 % % Collecting all of the key results
-algo_performance_stor_vec=[number_of_post_burn_in_transactions;
-    mean_bid_ask_spread;
-    robot_z_max_inventory_position_dollars;
-    robot_z_max_inventory_position_shares;
-    robot_z_total_trading_profit;
-    robot_z_total_trading_volume;
-    robot_z_final_inventory_position;
-    robot_z_final_cash_position;
-    mean_TtE;
-    median_TtE;
-    std_TtE;
-    fraction_of_robot_1_orders_executed;
-    fraction_of_robot1_orders_placed_mispriced];
+% algo_performance_stor_vec=[number_of_post_burn_in_transactions;
+    % mean_bid_ask_spread;
+    % robot_z_max_inventory_position_dollars;
+    % robot_z_max_inventory_position_shares;
+    % robot_z_total_trading_profit;
+    % robot_z_total_trading_volume;
+    % robot_z_final_inventory_position;
+    % robot_z_final_cash_position;
+    % mean_TtE;
+    % median_TtE;
+    % std_TtE;
+    % fraction_of_robot_1_orders_executed;
+    % fraction_of_robot1_orders_placed_mispriced];
  
 %%% -----------------------------------
 % % Storing the key results 
