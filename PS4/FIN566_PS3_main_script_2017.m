@@ -90,7 +90,7 @@ price_flex=1;  % dont change this
 prob_last_order_price_sets_to_price_robot_1=0;  % dont change this 
 
 % Probability that 'last_order_price' resets to the newest order price
-prob_last_order_price_resets=0.01;%0.011;
+prob_last_order_price_resets=0.06;%0.011;
 
 % Burn-in period
 burn_in_period=1322;    % dont change this 
