@@ -3,7 +3,7 @@ b = importdata('b.dat');
 x_stor = [0.01:0.01:0.05];
 
 profit_mat = [];
-profit_sim = zeros(length(x_stor,100))
+profit_sim = zeros(length(x_stor),100);
 
 tic
 for x_i = 1:length(x_stor)
