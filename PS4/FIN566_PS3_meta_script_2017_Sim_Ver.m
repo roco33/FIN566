@@ -89,26 +89,34 @@ main_simulation_script='FIN566_PS3_main_script_2017_Sim_Ver';
 
 %% %******* Running the [Meta-] Simulation***********
 
-num_simulation_runs=50;
+num_simulation_runs=100;
 
 %% %*******Creating Data-Storage Structures***********
 meta_comparison_mat=zeros(13,num_simulation_runs);
 
 %%
 % tic
-for w=1:num_simulation_runs
- %tic
- 
-	if rand() < 0.5
-		prob_last_order_price_resets = 0.01;
-	else
-		prob_last_order_price_resets = 0.06;
-	end
-  
-    eval(main_simulation_script)
 
- % toc
-  %w
+if sim_inc == 1
+
+	for w=1:num_simulation_runs
+	 %tic
+	 
+		if rand() < 0.5
+			prob_last_order_price_resets = 0.01;
+		else
+			prob_last_order_price_resets = 0.06;
+		end
+		eval(main_simulation_script)
+
+	 % toc
+	  %w
+	end
+
+	else
+	
+	eval(main_simulation_script)
+	
 end
 % toc
 
