@@ -80,7 +80,7 @@ prob_last_order_price_sets_to_price_robot_1=0;
 burn_in_period=1322;
 
 % theta trgger value 
-mm_trigger_value = 0.06;
+% mm_trigger_value = 0.06;
 
 
 %% %*****Designating the Main Simulation Script's Name*****
