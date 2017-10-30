@@ -26,8 +26,5 @@ else
 end
 
 % set order quantity
-if t > t_max && robot1_inventory_stor_vec(t) <500
-	quantity_robot_j = 500-robot1_inventory_stor_vec(t);
-else
-	quantity_robot_j=max_potential_quantity_robot1;
-end   
+quantity_robot_j=max_potential_quantity_robot1;
+   
