@@ -49,7 +49,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 % %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_aggressive_execution_simple';%'robot1_algo_aggressive_execution_simple';%'robot1_algo_passive_execution_PS5_Q2_2017'
+robot1_commands='robot1_algo_aggressive_execution_simple';%'robot1_algo_aggressive_execution_simple';%robot1_algo_passive_execution_PS5_Q2_2017
 
 
 % %% %*****Designating the Background-Trader Control-Script Name*****
@@ -66,11 +66,8 @@ robot1_participate_indic=1;
 % Number of time-steps
 t_max=6322;
 
-% whether or not robot_1 is automatically given the chance to place one order at the very end of the simulation
-% set 0, for question 1
-% set 1, for question 2
+% set 1 for question 2
 robot1_enters_one_order_after_tmax_indic=1;
-
 
 % Number of background traders
 num_bgt=50;
@@ -149,8 +146,8 @@ order_id=0;
 last_order_price=floor((max_price+min_price)/2);
 
 
-while t<=t_max
-    
+while t<=t_max+1
+if t <=t_max    
 %-----------------------------------------------------------
 % Generate a random new limit order
 %-----------------------------------------------------------
@@ -216,6 +213,7 @@ eval(orderbook_construction_code);
 %increasing the time increment
 %-----------------------------------------------------------
 t=t+1;
+end
 
 
 %------------------------------------------------------
@@ -306,7 +304,6 @@ last_order_price_stor_vec(t)=last_order_price;
 t=t+1;
 
 end
-
 
 end
 

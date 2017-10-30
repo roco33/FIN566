@@ -13,7 +13,7 @@ clear
 %*****Setting the appropriate path 
     %(This will need to be modified on each individual computer)
     
-Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+Matlab_trading_simulations_folder=pwd;
 
 
 p=path;
@@ -72,8 +72,8 @@ price_flex=1;
 % Probability that 'last_order_price' resets to the newest order price
 prob_last_order_price_resets=0.03;
 
-plopr_intercept=0;%
-plopr_ordersize_param=0.04;%
+plopr_intercept=0.01435;%
+plopr_ordersize_param=0.01435;%
 perm_price_impact_slope_coeff=plopr_ordersize_param*((1-plopr_intercept)/max_quantity);
 
 % Scaling of PLOPR if the order was placed by robot1
@@ -81,6 +81,9 @@ plopr_scaling_robot1=1;
 
 % number of simulation runs
 num_sim_runs=50;
+
+% robot1 order every g period
+g = 250;%250,25,10
 
 % %% %*******Creating Data-Storage Structures***********
 

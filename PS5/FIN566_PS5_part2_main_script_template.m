@@ -13,11 +13,11 @@
 % it from a meta-script, uncomment the two "Independence Commands" below,
 % as indicated.
 
-run_main_script_independently_indic=0;
+% run_main_script_independently_indic=0;
 
 %*****Independence Commands*********** (Uncomment to run this script independently)
 %clear
-run_main_script_independently_indic=1; 
+run_main_script_independently_indic=0; 
 % tic
 
 
@@ -29,7 +29,7 @@ if run_main_script_independently_indic==1
 %*****Setting the appropriate path 
     %(This will need to be modified on each individual computer)
 
-Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+Matlab_trading_simulations_folder=pwd;
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
@@ -59,10 +59,10 @@ background_trader_commands='bgt_behavior_rw_price_FAK';
 % %% %*******Setting Model Parameters***********
 
 % Whether robot1 participates (1) or not (0)
-robot1_participate_indic=0;
+robot1_participate_indic=1;
 
 % Number of time-steps
-t_max=1322;
+t_max=6322;
 
 % Burn-in period
 burn_in_period=1322;
@@ -89,6 +89,9 @@ perm_price_impact_slope_coeff=plopr_ordersize_param*((1-plopr_intercept)/max_qua
 
 % Scaling of PLOPR if the order was placed by robot1
 plopr_scaling_robot1=1;
+
+% robot1 order every g period
+g = 250;%250,25,10
 
 end
 
@@ -218,7 +221,9 @@ t=t+1;
 % about when robot1 participates and when he doesn't is now determined by
 % the robot1 algorithm.
 
-if (t>burn_in_period)&&(robot1_participate_indic==1)
+robot1_participation_draw = rem(t,g) == 0;
+
+if (t>burn_in_period)&&(robot1_participate_indic==1) && robot1_participation_draw
 
     parent_script_only_price=last_order_price;
 

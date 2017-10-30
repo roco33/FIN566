@@ -81,3 +81,6 @@ half_mean_bid_ask_spread_when_robot1_entered_orders=mean_bid_ask_spread_when_rob
 
 %IS_bam_bam50_TWAP_VWAP
 
+results_stor_vec=[number_of_trades,...
+ robot1_IS_vs_bam,...
+ half_mean_bid_ask_spread];
