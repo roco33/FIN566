@@ -83,7 +83,7 @@ plopr_scaling_robot1=1;
 num_sim_runs=50;
 
 % robot1 order every g period
-g = 250;%250,25,10
+g = 10;%250,25,10
 
 % %% %*******Creating Data-Storage Structures***********
 
