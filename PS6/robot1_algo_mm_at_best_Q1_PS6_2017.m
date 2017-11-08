@@ -23,7 +23,7 @@ if robot1_inventory_stor_vec(t) == 0
 % modification orders & new order 
 % if net inventory is positive, then cancle all buy orders and set passive sell
 elseif robot1_inventory_stor_vec(t) > 0
-	if (ismember(1,live_buy_orders_list(:,1))
+	if (ismember(1,live_buy_orders_list(:,1)))
 		message_type = 2;
 		order_index = find(live_buy_orders_list(:,1),1);
 		order_id = live_buy_orders_list(order_index,6);
@@ -38,10 +38,17 @@ elseif robot1_inventory_stor_vec(t) > 0
 	
 % if net inventory is negative, then cancle all sell orders and set passive buy
 elseif robot1_inventory_stor_vec(t) < 0
-	message_type = 1;% new order
-	alive_indicator_robot_j = 1;% alive order
-	quantity_robot_j = robot1_order_size;
-	buy_sell_robot_j = 1;% buy order
-	price_robot_j = best_bid;% best bid price
+	if (ismember(1,live_sell_orders_list(:,1)))
+		message_type = 2;
+		order_index = find(live_sell_orders_list(:,1),1);
+		order_id = live_sell_orders_list(order_index,6);
+		quantity_robot_j = 0;
+	elseif
+		message_type = 1;% new order
+		alive_indicator_robot_j = 1;% alive order
+		quantity_robot_j = robot1_order_size;
+		buy_sell_robot_j = 1;% buy order
+		price_robot_j = best_bid;% best bid price
+	end
 
 end
