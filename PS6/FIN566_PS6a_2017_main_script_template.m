@@ -50,7 +50,7 @@ orderbook_construction_code='orderbook_depth_construction_subscript';
 
 % %% %*****Designating the robot1 Control-Script Name*****
     %(This will need to be modified for each different control-script)
-robot1_commands='robot1_algo_mm_at_best_Q1_PS6_2017';%
+robot1_commands='robot1_algo_mm_at_best_Q1_PS6_2017_1';%
 
 % %% %*****Designating the Background-Trader Control-Script Name*****
    %(This can be modified to get different varieties of background traders)

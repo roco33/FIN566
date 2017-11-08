@@ -16,7 +16,8 @@ clear
     %(I just need to uncomment the appropriate path file)
 
 'Home MBP'
-Matlab_trading_simulations_folder='/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
+Matlab_trading_simulations_folder=pwd;
+%'/Users/adamclarkjoseph/Dropbox (A_D_A_M)/Projects/Teaching_Fall_2017/FIN566_MSFE_2017/FIN566_2017_Code_Library';
 
 p=path;
 path(p,Matlab_trading_simulations_folder);
